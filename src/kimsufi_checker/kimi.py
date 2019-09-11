@@ -3,6 +3,7 @@ import sys
 import time
 
 import requests
+from ww import f
 
 SERVER_DICT = {
     'ks1': '1801sk12',
@@ -21,7 +22,6 @@ SERVER_DICT = {
 
 URL = 'https://www.ovh.com/engine/api/dedicated/server/availabilities?country=eu'
 TIME = 8
-
 
 class KimiException(Exception):
     pass
@@ -47,9 +47,9 @@ class Checker:
                 data = r.json()
                 return data
         except requests.RequestException:
-            raise KimiException(f'{Colours.yellow}Unable to connect to OVH{Colours.reset}')
+            raise KimiException(f('{Colours.yellow}Unable to connect to OVH{Colours.reset}'))
         except (ValueError, KeyError):
-            raise KimiException(f'{Colours.yellow}Invalid response from OVH{Colours.reset}')
+            raise KimiException(f('{Colours.yellow}Invalid response from OVH{Colours.reset}'))
 
     def mas_data(self, data):
         for x in data:
@@ -59,11 +59,11 @@ class Checker:
                         continue
                     if y['availability'] != 'unavailable':
                         self.server = True
-                        print(f'{Colours.green}Server available in: {y["datacenter"]}{Colours.reset}')
-                        print(f'https://www.kimsufi.com/uk/order/kimsufi.xml?reference={self.server_choice}\n')  # noqa: E501¬
+                        print(f('{Colours.green}Server available in: {y["datacenter"]}{Colours.reset}'))
+                        print(f('https://www.kimsufi.com/uk/order/kimsufi.xml?reference={self.server_choice}\n'))  # noqa: E501¬
 
     def loop(self):    # noqa: C901
-        print(f'\nProbing every {TIME} seconds...\n')
+        print(f('\nProbing every {TIME} seconds...\n'))
         try:
             self.server_choice = SERVER_DICT[self.selection]
         except KeyError:
@@ -74,7 +74,7 @@ class Checker:
             self.mas_data(data)
 
             if not self.server:
-                print(f'{Colours.red}No servers available{Colours.reset} {time.ctime()}')
+                print(f('{Colours.red}No servers available{Colours.reset} {time.ctime()}'))
                 time.sleep(TIME)
             else:
                 break
@@ -88,7 +88,7 @@ def main():
     selection = args.ks
 
     if selection not in SERVER_DICT.keys():
-        sys.exit(f'{Colours.yellow}Invalid option{Colours.reset}')
+        sys.exit(f('{Colours.yellow}Invalid option{Colours.reset}'))
 
     checker = Checker(selection)
 
