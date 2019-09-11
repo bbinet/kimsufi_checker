@@ -37,3 +37,10 @@ kimsufi-checker <arg>
 - ks11
 - ks12
 ```
+## Run example
+
+```
+$ kimsufi-checker ks2 && sms 'Kimsufi ks2 available!!!'
+
+$ while true; do kimsufi-checker ks2 && ( sms 'Kimsufi ks2 available!!! https://www.kimsufi.com/uk/order/kimsufi.xml?reference=1801sk13'; notify-send -i /usr/share/icons/Tango/scalable/status/dialog-warning.svg 'Kimsufi KS-2 server available!!!' '<a href="https://www.kimsufi.com/uk/order/kimsufi.xml?reference=1801sk13">Buy Kimsufi KS-2 server</a>' ); sleep 8; done
+```
